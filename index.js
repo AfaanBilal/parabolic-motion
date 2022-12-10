@@ -12,10 +12,10 @@ let frameRate = 60;
 let intervalMs = Math.floor(1000 / frameRate);
 
 const toRad = (angle) => angle * (Math.PI / 180);
-const g = 9.8;
 const xOffset = 30;
 const yOffset = 600;
 const textOffset = 20;
+let g = 9.8;
 let radius = 10;
 
 let frame = 0;
@@ -32,6 +32,7 @@ const iV = document.getElementById("iv");
 const iA = document.getElementById("ia");
 const iR = document.getElementById("ir");
 const fr = document.getElementById("fr");
+const ag = document.getElementById("ag");
 
 const sP = document.getElementById("sp");
 const sH = document.getElementById("sh");
@@ -233,6 +234,7 @@ btnStart.addEventListener("click", () => {
     ia = iA.value;
     radius = iR.value;
     frameRate = fr.value;
+    g = ag.value;
 
     intervalMs = Math.floor(1000 / frameRate);
 
