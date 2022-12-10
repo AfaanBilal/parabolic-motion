@@ -101,7 +101,7 @@ const drawAxes = () => {
     ctx.stroke();
 
     for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
-        ctx.fillText(i, xOffset - textOffset, yOffset - i);
+        ctx.fillText(yOffset - i, xOffset - textOffset, i);
     }
 };
 
