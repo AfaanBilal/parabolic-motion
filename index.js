@@ -87,6 +87,12 @@ const drawHorizontal = (y) => {
     ctx.stroke();
 };
 
+const drawCoordinates = (x, y) => {
+    ctx.fillText("t: " + tCoordinate(frame).toFixed(3) + "s", x, y - 50);
+    ctx.fillText("x: " + x.toFixed(3) + "m", x, y - 40);
+    ctx.fillText("y: " + (yOffset - y).toFixed(3) + "m", x, y - 30);
+};
+
 const btnStart = document.getElementById("start");
 const btnPause = document.getElementById("pause_resume");
 const btnReset = document.getElementById("reset");
@@ -99,6 +105,7 @@ const iR = document.getElementById("ir");
 const sP = document.getElementById("sp");
 const sH = document.getElementById("sh");
 const sV = document.getElementById("sv");
+const sC = document.getElementById("sc");
 
 const reset = () => {
     removeInterval();
@@ -112,6 +119,7 @@ const reset = () => {
     iH.removeAttribute("disabled");
     iV.removeAttribute("disabled");
     iA.removeAttribute("disabled");
+    iR.removeAttribute("disabled");
     sH.removeAttribute("disabled");
     sV.removeAttribute("disabled");
 };
@@ -125,6 +133,7 @@ let ia = 0; // launch angle (degrees)
 let sp = false; // show path
 let sh = false; // show horizontal
 let sv = false; // show vertical
+let sc = false; // show coordinates
 
 let a = 0;
 let vCos = 0;
@@ -146,6 +155,7 @@ const draw = () => {
     sp && drawPath();
     sh && drawHorizontal(y);
     sv && drawVertical(x);
+    sc && drawCoordinates(x, y);
     drawAxis();
 
     if (y >= yOffset && frame > 0) {
@@ -167,6 +177,7 @@ btnStart.addEventListener("click", () => {
     sp = sP.checked;
     sh = sH.checked;
     sv = sV.checked;
+    sc = sC.checked;
 
     a = toRad(ia);
     vCos = iv * Math.cos(a);
@@ -180,6 +191,7 @@ btnStart.addEventListener("click", () => {
     iH.setAttribute("disabled", "disabled");
     iV.setAttribute("disabled", "disabled");
     iA.setAttribute("disabled", "disabled");
+    iR.setAttribute("disabled", "disabled");
     sH.setAttribute("disabled", "disabled");
     sV.setAttribute("disabled", "disabled");
 });
