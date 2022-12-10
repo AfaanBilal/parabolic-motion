@@ -23,7 +23,69 @@ let intervalHandle = null;
 const setupInterval = () => { intervalHandle = setInterval(tick, intervalMs); };
 const removeInterval = () => { if (!intervalHandle) return; clearInterval(intervalHandle); intervalHandle = null; };
 
-const drawAxis = () => {
+const btnStart = document.getElementById("start");
+const btnPause = document.getElementById("pause_resume");
+const btnReset = document.getElementById("reset");
+
+const iH = document.getElementById("ih");
+const iV = document.getElementById("iv");
+const iA = document.getElementById("ia");
+const iR = document.getElementById("ir");
+const fr = document.getElementById("fr");
+
+const sP = document.getElementById("sp");
+const sH = document.getElementById("sh");
+const sV = document.getElementById("sv");
+const sC = document.getElementById("sc");
+const sA = document.getElementById("sa");
+
+let ih = 0; // initial height
+let iv = 0; // initial velocity (m/s)
+let ia = 0; // launch angle (degrees)
+
+let sp = true; // show path
+let sh = false; // show horizontal
+let sv = false; // show vertical
+let sc = false; // show coordinates
+let sa = true; // show axes
+
+let a = 0;
+let vCos = 0;
+let vSin = 0;
+
+const enableInputs = () => {
+    btnStart.removeAttribute("disabled");
+    btnPause.setAttribute("disabled", "disabled");
+    btnReset.setAttribute("disabled", "disabled");
+    iH.removeAttribute("disabled");
+    iV.removeAttribute("disabled");
+    iA.removeAttribute("disabled");
+    iR.removeAttribute("disabled");
+    fr.removeAttribute("disabled");
+    sP.removeAttribute("disabled");
+    sH.removeAttribute("disabled");
+    sV.removeAttribute("disabled");
+    sC.removeAttribute("disabled");
+    sA.removeAttribute("disabled");
+};
+
+const disableInputs = () => {
+    btnStart.setAttribute("disabled", "disabled");
+    btnPause.removeAttribute("disabled");
+    btnReset.removeAttribute("disabled");
+    iH.setAttribute("disabled", "disabled");
+    iV.setAttribute("disabled", "disabled");
+    iA.setAttribute("disabled", "disabled");
+    iR.setAttribute("disabled", "disabled");
+    fr.setAttribute("disabled", "disabled");
+    sP.setAttribute("disabled", "disabled");
+    sH.setAttribute("disabled", "disabled");
+    sV.setAttribute("disabled", "disabled");
+    sC.setAttribute("disabled", "disabled");
+    sA.setAttribute("disabled", "disabled");
+};
+
+const drawAxes = () => {
     ctx.beginPath();
     ctx.moveTo(xOffset, yOffset);
     ctx.lineTo(canvas.width - xOffset, yOffset);
@@ -93,55 +155,16 @@ const drawCoordinates = (x, y) => {
     ctx.fillText("y: " + (yOffset - y).toFixed(3) + "m", x + 10, y - 30);
 };
 
-const btnStart = document.getElementById("start");
-const btnPause = document.getElementById("pause_resume");
-const btnReset = document.getElementById("reset");
-
-const iH = document.getElementById("ih");
-const iV = document.getElementById("iv");
-const iA = document.getElementById("ia");
-const iR = document.getElementById("ir");
-const fr = document.getElementById("fr");
-
-const sP = document.getElementById("sp");
-const sH = document.getElementById("sh");
-const sV = document.getElementById("sv");
-const sC = document.getElementById("sc");
-
 const reset = () => {
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawAxis();
+    sa && drawAxes();
     drawCircle(xOffset, yOffset);
     frame = 0;
-    btnStart.removeAttribute("disabled");
-    btnPause.setAttribute("disabled", "disabled");
-    btnReset.setAttribute("disabled", "disabled");
-    iH.removeAttribute("disabled");
-    iV.removeAttribute("disabled");
-    iA.removeAttribute("disabled");
-    iR.removeAttribute("disabled");
-    fr.removeAttribute("disabled");
-    sP.removeAttribute("disabled");
-    sH.removeAttribute("disabled");
-    sV.removeAttribute("disabled");
-    sC.removeAttribute("disabled");
+    enableInputs();
 };
 
 reset();
-
-let ih = 0; // initial height
-let iv = 0; // initial velocity (m/s)
-let ia = 0; // launch angle (degrees)
-
-let sp = false; // show path
-let sh = false; // show horizontal
-let sv = false; // show vertical
-let sc = false; // show coordinates
-
-let a = 0;
-let vCos = 0;
-let vSin = 0;
 
 const tCoordinate = (frame) => frame * intervalMs / 1000;
 const xCoordinate = (t) => xOffset + vCos * t;
@@ -160,7 +183,7 @@ const draw = () => {
     sh && drawHorizontal(y);
     sv && drawVertical(x);
     sc && drawCoordinates(x, y);
-    drawAxis();
+    sa && drawAxes();
 
     if (y >= yOffset && frame > 0) {
         frame = 0;
@@ -185,6 +208,7 @@ btnStart.addEventListener("click", () => {
     sh = sH.checked;
     sv = sV.checked;
     sc = sC.checked;
+    sa = sA.checked;
 
     a = toRad(ia);
     vCos = iv * Math.cos(a);
@@ -192,30 +216,17 @@ btnStart.addEventListener("click", () => {
 
     setupInterval();
 
-    btnStart.setAttribute("disabled", "disabled");
-    btnPause.removeAttribute("disabled");
-    btnReset.removeAttribute("disabled");
-    iH.setAttribute("disabled", "disabled");
-    iV.setAttribute("disabled", "disabled");
-    iA.setAttribute("disabled", "disabled");
-    iR.setAttribute("disabled", "disabled");
-    fr.setAttribute("disabled", "disabled");
-    sP.setAttribute("disabled", "disabled");
-    sH.setAttribute("disabled", "disabled");
-    sV.setAttribute("disabled", "disabled");
-    sC.setAttribute("disabled", "disabled");
+    disableInputs();
 });
 
 btnPause.addEventListener("click", () => {
     if (intervalHandle) {
         removeInterval();
-        document.getElementById("pause_resume").textContent = "Resume";
+        btnPause.textContent = "Resume";
     } else {
         setupInterval();
-        document.getElementById("pause_resume").textContent = "Pause";
+        btnPause.textContent = "Pause";
     }
 });
 
-btnReset.addEventListener("click", () => {
-    reset();
-});
+btnReset.addEventListener("click", () => reset());
