@@ -8,8 +8,8 @@
 const canvas = document.getElementById("c");
 var ctx = canvas.getContext("2d");
 
-const frameRate = 30;
-const intervalMs = Math.floor(1000 / frameRate);
+let frameRate = 60;
+let intervalMs = Math.floor(1000 / frameRate);
 
 const toRad = (angle) => angle * (Math.PI / 180);
 const g = 9.8;
@@ -101,6 +101,7 @@ const iH = document.getElementById("ih");
 const iV = document.getElementById("iv");
 const iA = document.getElementById("ia");
 const iR = document.getElementById("ir");
+const fr = document.getElementById("fr");
 
 const sP = document.getElementById("sp");
 const sH = document.getElementById("sh");
@@ -173,6 +174,9 @@ btnStart.addEventListener("click", () => {
     iv = iV.value;
     ia = iA.value;
     radius = iR.value;
+    frameRate = fr.value;
+
+    intervalMs = Math.floor(1000 / frameRate);
 
     sp = sP.checked;
     sh = sH.checked;
