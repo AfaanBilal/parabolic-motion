@@ -16,7 +16,7 @@ const g = 9.8;
 const xOffset = 30;
 const yOffset = 600;
 const textOffset = 20;
-const radius = 10;
+let radius = 10;
 
 let frame = 0;
 let intervalHandle = null;
@@ -94,6 +94,7 @@ const btnReset = document.getElementById("reset");
 const iH = document.getElementById("ih");
 const iV = document.getElementById("iv");
 const iA = document.getElementById("ia");
+const iR = document.getElementById("ir");
 
 const sP = document.getElementById("sp");
 const sH = document.getElementById("sh");
@@ -161,6 +162,7 @@ btnStart.addEventListener("click", () => {
     ih = iH.value;
     iv = iV.value;
     ia = iA.value;
+    radius = iR.value;
 
     sp = sP.checked;
     sh = sH.checked;
