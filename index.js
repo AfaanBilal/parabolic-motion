@@ -65,6 +65,7 @@ const enableInputs = () => {
     iA.removeAttribute("disabled");
     iR.removeAttribute("disabled");
     fr.removeAttribute("disabled");
+    ag.removeAttribute("disabled");
     sP.removeAttribute("disabled");
     sH.removeAttribute("disabled");
     sV.removeAttribute("disabled");
@@ -82,6 +83,7 @@ const disableInputs = () => {
     iA.setAttribute("disabled", "disabled");
     iR.setAttribute("disabled", "disabled");
     fr.setAttribute("disabled", "disabled");
+    ag.setAttribute("disabled", "disabled");
     sP.setAttribute("disabled", "disabled");
     sH.setAttribute("disabled", "disabled");
     sV.setAttribute("disabled", "disabled");
