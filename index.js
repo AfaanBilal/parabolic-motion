@@ -35,6 +35,20 @@ const drawCircle = (x, y) => {
     ctx.stroke();
 };
 
+const drawVertical = (x) => {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.stroke();
+};
+
+const drawHorizontal = (y) => {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+};
+
 const btnStart = document.getElementById("start");
 const btnPause = document.getElementById("pause_resume");
 const btnReset = document.getElementById("reset");
@@ -42,6 +56,9 @@ const btnReset = document.getElementById("reset");
 const iH = document.getElementById("ih");
 const iV = document.getElementById("iv");
 const iA = document.getElementById("ia");
+
+const sH = document.getElementById("sh");
+const sV = document.getElementById("sv");
 
 let frame = 0;
 
@@ -57,6 +74,8 @@ const reset = () => {
     iH.removeAttribute("disabled");
     iV.removeAttribute("disabled");
     iA.removeAttribute("disabled");
+    sH.removeAttribute("disabled");
+    sV.removeAttribute("disabled");
 };
 
 reset();
@@ -64,6 +83,9 @@ reset();
 let ih = 0; // initial height
 let iv = 0; // initial velocity (m/s)
 let ia = 0; // launch angle (degrees)
+
+let sh = false;
+let sv = false;
 
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -78,6 +100,8 @@ const draw = () => {
     y = yOffset - radius - ih - (vSin * t - g * t * t / 2);
 
     drawCircle(x, y);
+    sh && drawHorizontal(y);
+    sv && drawVertical(x);
     drawBaseline();
 
     if (y + radius >= yOffset && frame > 0) {
@@ -90,9 +114,14 @@ const tick = () => { draw(); frame++; };
 
 btnStart.addEventListener("click", () => {
     if (i) return;
+
     ih = iH.value;
     iv = iV.value;
     ia = iA.value;
+
+    sh = sH.checked;
+    sv = sV.checked;
+
     setupInterval();
 
     btnStart.setAttribute("disabled", "disabled");
@@ -101,6 +130,8 @@ btnStart.addEventListener("click", () => {
     iH.setAttribute("disabled", "disabled");
     iV.setAttribute("disabled", "disabled");
     iA.setAttribute("disabled", "disabled");
+    sH.setAttribute("disabled", "disabled");
+    sV.setAttribute("disabled", "disabled");
 });
 
 btnPause.addEventListener("click", () => {
