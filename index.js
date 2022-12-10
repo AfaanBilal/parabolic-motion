@@ -38,6 +38,7 @@ const sH = document.getElementById("sh");
 const sV = document.getElementById("sv");
 const sC = document.getElementById("sc");
 const sA = document.getElementById("sa");
+const sG = document.getElementById("sg");
 
 let ih = 0; // initial height
 let iv = 0; // initial velocity (m/s)
@@ -48,6 +49,7 @@ let sh = false; // show horizontal
 let sv = false; // show vertical
 let sc = false; // show coordinates
 let sa = true; // show axes
+let sg = false; // show grid
 
 let a = 0;
 let vCos = 0;
@@ -67,6 +69,7 @@ const enableInputs = () => {
     sV.removeAttribute("disabled");
     sC.removeAttribute("disabled");
     sA.removeAttribute("disabled");
+    sG.removeAttribute("disabled");
 };
 
 const disableInputs = () => {
@@ -83,6 +86,7 @@ const disableInputs = () => {
     sV.setAttribute("disabled", "disabled");
     sC.setAttribute("disabled", "disabled");
     sA.setAttribute("disabled", "disabled");
+    sG.setAttribute("disabled", "disabled");
 };
 
 const drawAxes = () => {
@@ -105,6 +109,26 @@ const drawAxes = () => {
     for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
         ctx.fillText(yOffset - i, xOffset - textOffset, i);
     }
+};
+
+const drawGrid = () => {
+    ctx.strokeStyle = "#666";
+
+    for (let i = 50; i <= 900; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(xOffset + i, yOffset);
+        ctx.lineTo(xOffset + i, canvas.height - yOffset);
+        ctx.stroke();
+    }
+
+    for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
+        ctx.beginPath();
+        ctx.moveTo(xOffset, i);
+        ctx.lineTo(canvas.width - xOffset, i);
+        ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#000";
 };
 
 const drawCircle = (x, y) => {
@@ -161,6 +185,7 @@ const reset = () => {
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     sa && drawAxes();
+    sg && drawGrid();
     drawCircle(xOffset, yOffset);
     frame = 0;
     enableInputs();
@@ -186,6 +211,7 @@ const draw = () => {
     sv && drawVertical(x);
     sc && drawCoordinates(x, y);
     sa && drawAxes();
+    sg && drawGrid();
 
     if (y >= yOffset && frame > 0) {
         frame = 0;
@@ -211,6 +237,7 @@ btnStart.addEventListener("click", () => {
     sv = sV.checked;
     sc = sC.checked;
     sa = sA.checked;
+    sg = sG.checked;
 
     a = toRad(ia);
     vCos = iv * Math.cos(a);
