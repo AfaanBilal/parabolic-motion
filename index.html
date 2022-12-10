@@ -22,12 +22,25 @@
     <div class="container py-4 bg-light mt-2 text-center">
         <h2>Parabolic Motion</h2>
         <hr>
-        Initial heigh (m): <input type="number" placeholder="Initial height" id="ih" value="0" />
-        Initial velocity (m/s): <input type="number" placeholder="Initial velocity" id="iv" value="75" />
-        Launch angle (deg): <input type="number" placeholder="Launch angel" id="ia" value="45" />
+        <div class="row">
+            <div class="col">
+                Initial heigh (m): <input type="number" placeholder="Initial height" id="ih" value="0"
+                    style="width: 100px" />
+            </div>
+            <div class="col">
+                Initial velocity (m/s): <input type="number" placeholder="Initial velocity" id="iv" value="75"
+                    style="width: 100px" />
+            </div>
+            <div class="col">
+                Launch angle (deg): <input type="number" placeholder="Launch angel" id="ia" value="45"
+                    style="width: 100px" />
+            </div>
+        </div>
         <hr>
-        Show horizontal: <input type="checkbox" id="sh" />
-        Show vertical: <input type="checkbox" id="sv" />
+        <div class="row">
+            <div class="col">Show horizontal: <input type="checkbox" id="sh" /></div>
+            <div class="col">Show vertical: <input type="checkbox" id="sv" /></div>
+        </div>
         <hr>
         <button id="start" type="button">Start</button>
         <button id="pause_resume" type="button">Pause</button>
