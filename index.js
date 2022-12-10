@@ -13,19 +13,33 @@ const intervalMs = Math.floor(1000 / frameRate);
 
 const toRad = (angle) => angle * (Math.PI / 180);
 const g = 9.8;
-const xOffset = 10;
-const yOffset = 580;
+const xOffset = 30;
+const yOffset = 600;
+const textOffset = 20;
 const radius = 10;
 
-let i = null;
-const setupInterval = () => { i = setInterval(tick, intervalMs); };
-const removeInterval = () => { if (!i) return; clearInterval(i); i = null; };
+let intervalHandle = null;
+const setupInterval = () => { intervalHandle = setInterval(tick, intervalMs); };
+const removeInterval = () => { if (!intervalHandle) return; clearInterval(intervalHandle); intervalHandle = null; };
 
-const drawBaseline = () => {
+const drawAxis = () => {
     ctx.beginPath();
     ctx.moveTo(xOffset, yOffset);
     ctx.lineTo(canvas.width - xOffset, yOffset);
     ctx.stroke();
+
+    for (let i = 0; i <= 900; i += 50) {
+        ctx.fillText(i, xOffset + i, yOffset + textOffset);
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(xOffset, yOffset);
+    ctx.lineTo(xOffset, canvas.height - yOffset);
+    ctx.stroke();
+
+    for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
+        ctx.fillText(i, xOffset - textOffset, yOffset - i);
+    }
 };
 
 const drawCircle = (x, y) => {
@@ -65,7 +79,7 @@ let frame = 0;
 const reset = () => {
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBaseline();
+    drawAxis();
     drawCircle(xOffset + radius, yOffset - radius);
     frame = 0;
     btnStart.removeAttribute("disabled");
@@ -102,7 +116,7 @@ const draw = () => {
     drawCircle(x, y);
     sh && drawHorizontal(y);
     sv && drawVertical(x);
-    drawBaseline();
+    drawAxis();
 
     if (y + radius >= yOffset && frame > 0) {
         frame = 0;
@@ -113,7 +127,7 @@ const draw = () => {
 const tick = () => { draw(); frame++; };
 
 btnStart.addEventListener("click", () => {
-    if (i) return;
+    if (intervalHandle) return;
 
     ih = iH.value;
     iv = iV.value;
@@ -135,7 +149,7 @@ btnStart.addEventListener("click", () => {
 });
 
 btnPause.addEventListener("click", () => {
-    if (i) {
+    if (intervalHandle) {
         removeInterval();
         document.getElementById("pause_resume").textContent = "Resume";
     } else {
