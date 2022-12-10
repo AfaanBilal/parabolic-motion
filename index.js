@@ -97,7 +97,7 @@ const drawAxes = () => {
 
     ctx.fillText("m", canvas.width - xOffset + 5, yOffset + 2);
     for (let i = 0; i <= 900; i += 50) {
-        ctx.fillText(i, xOffset + i, yOffset + textOffset);
+        ctx.fillText(i, xOffset + i - 5, yOffset + textOffset);
     }
 
     ctx.beginPath();
@@ -107,12 +107,12 @@ const drawAxes = () => {
 
     ctx.fillText("m", xOffset - 5, 20);
     for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
-        ctx.fillText(yOffset - i, xOffset - textOffset, i);
+        ctx.fillText(yOffset - i, xOffset - textOffset, i + 2);
     }
 };
 
 const drawGrid = () => {
-    ctx.strokeStyle = "#666";
+    ctx.strokeStyle = "#999";
 
     for (let i = 50; i <= 900; i += 50) {
         ctx.beginPath();
@@ -139,6 +139,8 @@ const drawCircle = (x, y) => {
 };
 
 const drawPath = () => {
+    ctx.strokeStyle = "#00f";
+
     let px = 0;
     let py = 0;
 
@@ -159,6 +161,8 @@ const drawPath = () => {
         px = x;
         py = y;
     }
+
+    ctx.strokeStyle = "#000";
 };
 
 const drawVertical = (x) => {
