@@ -184,7 +184,7 @@ const drawHorizontal = (y) => {
 
 const drawCoordinates = (x, y) => {
     ctx.fillText("t: " + tCoordinate(frame).toFixed(3) + "s", x + 10, y - 50);
-    ctx.fillText("x: " + x.toFixed(3) + "m", x + 10, y - 40);
+    ctx.fillText("x: " + (x - xOffset).toFixed(3) + "m", x + 10, y - 40);
     ctx.fillText("y: " + (yOffset - y).toFixed(3) + "m", x + 10, y - 30);
 };
 
