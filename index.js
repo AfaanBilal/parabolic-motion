@@ -18,6 +18,7 @@ const yOffset = 600;
 const textOffset = 20;
 const radius = 10;
 
+let frame = 0;
 let intervalHandle = null;
 const setupInterval = () => { intervalHandle = setInterval(tick, intervalMs); };
 const removeInterval = () => { if (!intervalHandle) return; clearInterval(intervalHandle); intervalHandle = null; };
@@ -49,6 +50,29 @@ const drawCircle = (x, y) => {
     ctx.stroke();
 };
 
+const drawPath = () => {
+    let px = 0;
+    let py = 0;
+
+    for (let i = 0; i <= frame; i++) {
+        let t = tCoordinate(i); // t in seconds
+
+        x = xCoordinate(t);
+        y = yCoordinate(t);
+
+        if (!px) px = x;
+        if (!py) py = y;
+
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        px = x;
+        py = y;
+    }
+};
+
 const drawVertical = (x) => {
     ctx.beginPath();
     ctx.moveTo(x, 0);
@@ -71,10 +95,9 @@ const iH = document.getElementById("ih");
 const iV = document.getElementById("iv");
 const iA = document.getElementById("ia");
 
+const sP = document.getElementById("sp");
 const sH = document.getElementById("sh");
 const sV = document.getElementById("sv");
-
-let frame = 0;
 
 const reset = () => {
     removeInterval();
@@ -98,22 +121,28 @@ let ih = 0; // initial height
 let iv = 0; // initial velocity (m/s)
 let ia = 0; // launch angle (degrees)
 
-let sh = false;
-let sv = false;
+let sp = false; // show path
+let sh = false; // show horizontal
+let sv = false; // show vertical
+
+let a = 0;
+let vCos = 0;
+let vSin = 0;
+
+const tCoordinate = (frame) => frame * intervalMs / 1000;
+const xCoordinate = (t) => xOffset + radius + vCos * t;
+const yCoordinate = (t) => yOffset - radius - ih - (vSin * t - g * t * t / 2);
 
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    let t = frame * intervalMs / 1000; // t in seconds
+    let t = tCoordinate(frame); // t in seconds
 
-    const a = toRad(ia);
-    const vCos = iv * Math.cos(a);
-    const vSin = iv * Math.sin(a);
-
-    x = xOffset + radius + vCos * t;
-    y = yOffset - radius - ih - (vSin * t - g * t * t / 2);
+    x = xCoordinate(t);
+    y = yCoordinate(t);
 
     drawCircle(x, y);
+    sp && drawPath();
     sh && drawHorizontal(y);
     sv && drawVertical(x);
     drawAxis();
@@ -133,8 +162,13 @@ btnStart.addEventListener("click", () => {
     iv = iV.value;
     ia = iA.value;
 
+    sp = sP.checked;
     sh = sH.checked;
     sv = sV.checked;
+
+    a = toRad(ia);
+    vCos = iv * Math.cos(a);
+    vSin = iv * Math.sin(a);
 
     setupInterval();
 
