@@ -14,18 +14,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parabolic Motion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 
 <body>
-    <h2>Parabolic Motion</h2>
-    <input type="number" placeholder="Initial velocity" id="iv" value="75" />
-    <input type="number" placeholder="Launch angel" id="ia" value="45" />
-    <hr>
-    <button id="start" type="button">Start</button>
-    <button id="pause_resume" type="button">Pause</button>
-    <button id="reset" type="button">Reset</button>
-    <hr>
-    <canvas id="c" width="1000" height="600" style="border:1px solid #000000;"></canvas>
+    <div class="container py-4 bg-light mt-2 text-center">
+        <h2>Parabolic Motion</h2>
+        <hr>
+        Initial heigh (m): <input type="number" placeholder="Initial height" id="ih" value="0" />
+        Initial velocity (m/s): <input type="number" placeholder="Initial velocity" id="iv" value="75" />
+        Launch angle (deg): <input type="number" placeholder="Launch angel" id="ia" value="45" />
+        <hr>
+        <div class="text-center">
+            <button id="start" type="button">Start</button>
+            <button id="pause_resume" type="button">Pause</button>
+            <button id="reset" type="button">Reset</button>
+        </div>
+        <hr>
+        <canvas id="c" width="1000" height="600" style="border:1px solid #999;"></canvas>
+        <hr>
+        &copy; <a href="https://afaan.dev" class="link-dark" target="_blank">Afaan Bilal</a>
+    </div>
+
     <script src="index.js"></script>
 </body>
 

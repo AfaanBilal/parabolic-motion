@@ -17,8 +17,6 @@ const xOffset = 10;
 const yOffset = 580;
 const radius = 10;
 
-let frame = 0;
-
 let i = null;
 const setupInterval = () => { i = setInterval(tick, intervalMs); };
 const removeInterval = () => { if (!i) return; clearInterval(i); i = null; };
@@ -37,16 +35,33 @@ const drawCircle = (x, y) => {
     ctx.stroke();
 };
 
+const btnStart = document.getElementById("start");
+const btnPause = document.getElementById("pause_resume");
+const btnReset = document.getElementById("reset");
+
+const iH = document.getElementById("ih");
+const iV = document.getElementById("iv");
+const iA = document.getElementById("ia");
+
+let frame = 0;
+
 const reset = () => {
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBaseline();
     drawCircle(xOffset + radius, yOffset - radius);
     frame = 0;
+    btnStart.removeAttribute("disabled");
+    btnPause.setAttribute("disabled", "disabled");
+    btnReset.setAttribute("disabled", "disabled");
+    iH.removeAttribute("disabled");
+    iV.removeAttribute("disabled");
+    iA.removeAttribute("disabled");
 };
 
 reset();
 
+let ih = 0; // initial height
 let iv = 0; // initial velocity (m/s)
 let ia = 0; // launch angle (degrees)
 
@@ -60,7 +75,7 @@ const draw = () => {
     const vSin = iv * Math.sin(a);
 
     x = xOffset + radius + vCos * t;
-    y = yOffset - radius - (vSin * t - g * t * t / 2);
+    y = yOffset - radius - ih - (vSin * t - g * t * t / 2);
 
     drawCircle(x, y);
     drawBaseline();
@@ -71,20 +86,24 @@ const draw = () => {
     }
 };
 
-const tick = () => {
-    draw();
-    frame++;
-    if (frame > 1000) frame = 0;
-};
+const tick = () => { draw(); frame++; };
 
-document.getElementById("start").addEventListener("click", () => {
+btnStart.addEventListener("click", () => {
     if (i) return;
-    iv = document.getElementById("iv").value;
-    ia = document.getElementById("ia").value;
+    ih = iH.value;
+    iv = iV.value;
+    ia = iA.value;
     setupInterval();
+
+    btnStart.setAttribute("disabled", "disabled");
+    btnPause.removeAttribute("disabled");
+    btnReset.removeAttribute("disabled");
+    iH.setAttribute("disabled", "disabled");
+    iV.setAttribute("disabled", "disabled");
+    iA.setAttribute("disabled", "disabled");
 });
 
-document.getElementById("pause_resume").addEventListener("click", () => {
+btnPause.addEventListener("click", () => {
     if (i) {
         removeInterval();
         document.getElementById("pause_resume").textContent = "Resume";
@@ -94,6 +113,6 @@ document.getElementById("pause_resume").addEventListener("click", () => {
     }
 });
 
-document.getElementById("reset").addEventListener("click", () => {
+btnReset.addEventListener("click", () => {
     reset();
 });
