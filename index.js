@@ -88,9 +88,9 @@ const drawHorizontal = (y) => {
 };
 
 const drawCoordinates = (x, y) => {
-    ctx.fillText("t: " + tCoordinate(frame).toFixed(3) + "s", x, y - 50);
-    ctx.fillText("x: " + x.toFixed(3) + "m", x, y - 40);
-    ctx.fillText("y: " + (yOffset - y).toFixed(3) + "m", x, y - 30);
+    ctx.fillText("t: " + tCoordinate(frame).toFixed(3) + "s", x + 10, y - 50);
+    ctx.fillText("x: " + x.toFixed(3) + "m", x + 10, y - 40);
+    ctx.fillText("y: " + (yOffset - y).toFixed(3) + "m", x + 10, y - 30);
 };
 
 const btnStart = document.getElementById("start");
@@ -121,8 +121,10 @@ const reset = () => {
     iV.removeAttribute("disabled");
     iA.removeAttribute("disabled");
     iR.removeAttribute("disabled");
+    sP.removeAttribute("disabled");
     sH.removeAttribute("disabled");
     sV.removeAttribute("disabled");
+    sC.removeAttribute("disabled");
 };
 
 reset();
@@ -196,8 +198,10 @@ btnStart.addEventListener("click", () => {
     iV.setAttribute("disabled", "disabled");
     iA.setAttribute("disabled", "disabled");
     iR.setAttribute("disabled", "disabled");
+    sP.setAttribute("disabled", "disabled");
     sH.setAttribute("disabled", "disabled");
     sV.setAttribute("disabled", "disabled");
+    sC.setAttribute("disabled", "disabled");
 });
 
 btnPause.addEventListener("click", () => {
