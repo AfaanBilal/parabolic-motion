@@ -91,6 +91,7 @@ const drawAxes = () => {
     ctx.lineTo(canvas.width - xOffset, yOffset);
     ctx.stroke();
 
+    ctx.fillText("m", canvas.width - xOffset + 5, yOffset + 2);
     for (let i = 0; i <= 900; i += 50) {
         ctx.fillText(i, xOffset + i, yOffset + textOffset);
     }
@@ -100,6 +101,7 @@ const drawAxes = () => {
     ctx.lineTo(xOffset, canvas.height - yOffset);
     ctx.stroke();
 
+    ctx.fillText("m", xOffset - 5, 20);
     for (let i = yOffset; i >= canvas.height - yOffset; i -= 50) {
         ctx.fillText(yOffset - i, xOffset - textOffset, i);
     }
