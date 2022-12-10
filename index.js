@@ -103,7 +103,7 @@ const reset = () => {
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawAxis();
-    drawCircle(xOffset + radius, yOffset - radius);
+    drawCircle(xOffset, yOffset);
     frame = 0;
     btnStart.removeAttribute("disabled");
     btnPause.setAttribute("disabled", "disabled");
@@ -130,8 +130,8 @@ let vCos = 0;
 let vSin = 0;
 
 const tCoordinate = (frame) => frame * intervalMs / 1000;
-const xCoordinate = (t) => xOffset + radius + vCos * t;
-const yCoordinate = (t) => yOffset - radius - ih - (vSin * t - g * t * t / 2);
+const xCoordinate = (t) => xOffset + vCos * t;
+const yCoordinate = (t) => yOffset - ih - (vSin * t - g * t * t / 2);
 
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -147,7 +147,7 @@ const draw = () => {
     sv && drawVertical(x);
     drawAxis();
 
-    if (y + radius >= yOffset && frame > 0) {
+    if (y >= yOffset && frame > 0) {
         frame = 0;
         removeInterval();
     }
