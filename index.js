@@ -189,6 +189,26 @@ const drawCoordinates = (x, y) => {
 };
 
 const reset = () => {
+    ih = iH.value;
+    iv = iV.value;
+    ia = iA.value;
+    radius = iR.value;
+    frameRate = fr.value;
+    g = ag.value;
+
+    intervalMs = Math.floor(1000 / frameRate);
+
+    sp = sP.checked;
+    sh = sH.checked;
+    sv = sV.checked;
+    sc = sC.checked;
+    sa = sA.checked;
+    sg = sG.checked;
+
+    a = toRad(ia);
+    vCos = iv * Math.cos(a);
+    vSin = iv * Math.sin(a);
+
     removeInterval();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     sa && drawAxes();
@@ -231,26 +251,6 @@ const tick = () => { draw(); frame++; };
 btnStart.addEventListener("click", () => {
     if (intervalHandle) return;
 
-    ih = iH.value;
-    iv = iV.value;
-    ia = iA.value;
-    radius = iR.value;
-    frameRate = fr.value;
-    g = ag.value;
-
-    intervalMs = Math.floor(1000 / frameRate);
-
-    sp = sP.checked;
-    sh = sH.checked;
-    sv = sV.checked;
-    sc = sC.checked;
-    sa = sA.checked;
-    sg = sG.checked;
-
-    a = toRad(ia);
-    vCos = iv * Math.cos(a);
-    vSin = iv * Math.sin(a);
-
     setupInterval();
 
     disableInputs();
@@ -266,4 +266,6 @@ btnPause.addEventListener("click", () => {
     }
 });
 
-btnReset.addEventListener("click", () => reset());
+btnReset.addEventListener("click", reset);
+
+Array.from(document.getElementsByTagName("input")).forEach((e) => { e.addEventListener("change", reset); });
