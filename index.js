@@ -193,7 +193,7 @@ const reset = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     sa && drawAxes();
     sg && drawGrid();
-    drawCircle(xOffset, yOffset);
+    drawCircle(xOffset, yOffset - ih);
     frame = 0;
     enableInputs();
 };
