@@ -150,8 +150,8 @@ const drawPath = () => {
     for (let i = 0; i <= frame; i++) {
         let t = tCoordinate(i); // t in seconds
 
-        x = xCoordinate(t);
-        y = yCoordinate(t);
+        let x = xCoordinate(t);
+        let y = yCoordinate(t);
 
         if (!px) px = x;
         if (!py) py = y;
